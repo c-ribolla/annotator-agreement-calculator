@@ -56,22 +56,13 @@ def label_confusion_pairs(df, item_col="item_id", label_col="label"):
     return Counter(disagreement_pairs)
 
 if __name__ == "__main__":
-    a = ["positive", "negative", "positive", "neutral"]
-    b = ["positive", "negative", "negative", "neutral"]
-    print(cohens_kappa(a,b))
-    
     df = pd.read_csv("data/sample_annotations.csv")
+    
+    pivoted = df.pivot(index="item_id", columns="annotator", values="label")
+    print(cohens_kappa(pivoted["annotator_A"].tolist(), pivoted["annotator_B"].tolist()))
+    
     count_matrix = pd.crosstab(df["item_id"], df["label"])
     print(fleiss_kappa(count_matrix, n_annotators=3))
     
     pair_counts = label_confusion_pairs(df)
     print(pair_counts)
-
-    pivoted = df.pivot(index="item_id", columns="annotator", values="label")
-    print(pivoted)
-    
-    real_cohens_kappa = cohens_kappa(
-        pivoted["annotator_A"].tolist(),
-        pivoted["annotator_B"].tolist()
-    )
-    print(real_cohens_kappa)
