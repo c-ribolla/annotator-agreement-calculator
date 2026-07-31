@@ -1,5 +1,5 @@
 import pandas as pd
-from src.agreement_calculator import cohens_kappa, fleiss_kappa
+from src.agreement_calculator import cohens_kappa, fleiss_kappa, label_confusion_pairs
 
 ## Test a known result
 def test_cohens_kappa_known_value():
@@ -30,3 +30,10 @@ def test_fleiss_kappa_perfect_agreement():
     count_matrix = pd.crosstab(df["item_id"], df["label"])
     result = fleiss_kappa(count_matrix, n_annotators=3)
     assert result == 1.0
+    
+def test_label_confusion_pairs_known_value():
+    df = pd.read_csv("data/sample_annotations.csv")
+    result = label_confusion_pairs(df)
+    assert result[("neutral", "positive")] == 2
+    assert result[("negative", "positive")] == 2
+    assert result[("negative", "neutral")] == 1
