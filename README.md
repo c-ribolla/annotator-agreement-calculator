@@ -34,7 +34,7 @@ pytest
 
 ## Results & Analysis
 
-This project computes inter-annotator agreement using both Cohen's Kappa and 
+This project calculates inter-annotator agreement using both Cohen's Kappa and 
 Fleiss' Kappa on the same 8-item dataset. The dataset is intentionally small 
 to demonstrate the methodology rather than produce statistically significant 
 findings. In a production setting, this analysis would need a substantially 
